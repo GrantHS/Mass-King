@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         playerControls = new PlayerInputActions();
+        GetComponent<MeshRenderer>().material.color = GameManager.Instance.normalColor;
     }
 
     private void OnEnable()
@@ -39,6 +40,11 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         _moveVector = playerControls.Player.Move.ReadValue<Vector3>() * _moveSpeed;
+
+        playerControls.Player.White.performed += ctx => ChangeColor(Color.white);
+        playerControls.Player.Red.performed += ctx => ChangeColor(Color.red);
+        playerControls.Player.Green.performed += ctx => ChangeColor(Color.green);
+        playerControls.Player.Blue.performed += ctx => ChangeColor(Color.blue);
     }
 
     private void FixedUpdate()
@@ -46,12 +52,6 @@ public class PlayerMovement : MonoBehaviour
         _rb.AddForce(_moveVector);
 
         playerControls.Player.Jump.performed += Jump;
-    }
-
-    private void Jump(InputAction.CallbackContext context)
-    {
-        Debug.Log("jumping");
-        if(_isGrounded) _rb.AddForce(Vector3.up * _jumpPower);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -70,6 +70,23 @@ public class PlayerMovement : MonoBehaviour
         {
             _isGrounded = false;
         }
+    }
+
+    private void Jump(InputAction.CallbackContext context)
+    {
+        
+        if (_isGrounded) _rb.AddForce(Vector3.up * _jumpPower);
+    }
+
+    public void ChangeColor(Color color)
+    {
+        
+        if(GameManager.Instance.Energy > 0)
+        {
+            GetComponent<MeshRenderer>().material.color = color;
+        }
+        
+
     }
 }
 

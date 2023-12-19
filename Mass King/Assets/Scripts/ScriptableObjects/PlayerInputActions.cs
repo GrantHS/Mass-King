@@ -44,6 +44,42 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Red"",
+                    ""type"": ""Button"",
+                    ""id"": ""4188ca94-e1ee-45a5-9e2d-de08151a681e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""White"",
+                    ""type"": ""Button"",
+                    ""id"": ""edfd8168-f153-449a-b637-1773cf7a49ca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Green"",
+                    ""type"": ""Button"",
+                    ""id"": ""4b6d1df2-c429-4194-b373-6e34c18e8c8f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Blue"",
+                    ""type"": ""Button"",
+                    ""id"": ""623a700d-5353-49a1-aab0-57c2d30235f2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,6 +148,50 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c63ed45c-eef3-4f75-922a-37fce4f2fdd9"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Red"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51ac60ac-77a4-4d6d-908b-a4130617b992"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""White"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""61f16a2c-5af7-4c9d-93ee-be96c84cc657"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Green"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7aef1f80-fa06-439a-aae9-da3d17b4bc57"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Blue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -134,6 +214,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_Red = m_Player.FindAction("Red", throwIfNotFound: true);
+        m_Player_White = m_Player.FindAction("White", throwIfNotFound: true);
+        m_Player_Green = m_Player.FindAction("Green", throwIfNotFound: true);
+        m_Player_Blue = m_Player.FindAction("Blue", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -197,12 +281,20 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Red;
+    private readonly InputAction m_Player_White;
+    private readonly InputAction m_Player_Green;
+    private readonly InputAction m_Player_Blue;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Red => m_Wrapper.m_Player_Red;
+        public InputAction @White => m_Wrapper.m_Player_White;
+        public InputAction @Green => m_Wrapper.m_Player_Green;
+        public InputAction @Blue => m_Wrapper.m_Player_Blue;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -218,6 +310,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Red.started += instance.OnRed;
+            @Red.performed += instance.OnRed;
+            @Red.canceled += instance.OnRed;
+            @White.started += instance.OnWhite;
+            @White.performed += instance.OnWhite;
+            @White.canceled += instance.OnWhite;
+            @Green.started += instance.OnGreen;
+            @Green.performed += instance.OnGreen;
+            @Green.canceled += instance.OnGreen;
+            @Blue.started += instance.OnBlue;
+            @Blue.performed += instance.OnBlue;
+            @Blue.canceled += instance.OnBlue;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -228,6 +332,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Red.started -= instance.OnRed;
+            @Red.performed -= instance.OnRed;
+            @Red.canceled -= instance.OnRed;
+            @White.started -= instance.OnWhite;
+            @White.performed -= instance.OnWhite;
+            @White.canceled -= instance.OnWhite;
+            @Green.started -= instance.OnGreen;
+            @Green.performed -= instance.OnGreen;
+            @Green.canceled -= instance.OnGreen;
+            @Blue.started -= instance.OnBlue;
+            @Blue.performed -= instance.OnBlue;
+            @Blue.canceled -= instance.OnBlue;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -258,5 +374,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnRed(InputAction.CallbackContext context);
+        void OnWhite(InputAction.CallbackContext context);
+        void OnGreen(InputAction.CallbackContext context);
+        void OnBlue(InputAction.CallbackContext context);
     }
 }
