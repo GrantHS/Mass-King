@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class GameManager : Singleton<GameManager>
 {
     //Player Parameters
-    private Color playerColor;    
+    private Color playerColor;
 
+    private Vector3 respawnPos;
+
+    private float respawnTime = 2;
     private float maxEnergy = 50;
     private float minEnergy = 0;
     private float energy = 100;
@@ -16,6 +19,9 @@ public class GameManager : Singleton<GameManager>
     public GameObject player;
 
     public Color normalColor = Color.white;
+
+    public bool isDrained;
+
 
     //UI Parameters
     public GameObject slider;
@@ -33,6 +39,8 @@ public class GameManager : Singleton<GameManager>
                 Energy = minEnergy;
                 playerColor = normalColor;
                 player.GetComponent<MeshRenderer>().material.color = normalColor;
+                player.GetComponent<PlayerMovement>().playerColor = PlatformColor.White;
+                isDrained = true;
             }
         }
         else
@@ -43,5 +51,45 @@ public class GameManager : Singleton<GameManager>
 
         //Debug.Log("Energy Level: " + energy);
         slider.GetComponent<Slider>().value = energy;
+    }
+
+    private void Start()
+    {
+        respawnPos = player.transform.position;
+    }
+
+    private IEnumerator RespawnPlayer()
+    {
+        Debug.Log("Respawning Player");
+        float blinkTime = (respawnTime / 3);
+
+        player.GetComponent<PlayerMovement>().enabled = false;
+        player.GetComponent<Rigidbody>().isKinematic = true;
+        player.GetComponent<MeshRenderer>().material.color = normalColor;
+
+        player.GetComponent<MeshRenderer>().enabled = false;
+        player.transform.position = respawnPos;
+        yield return new WaitForSeconds(blinkTime);
+        player.GetComponent<MeshRenderer>().enabled = true;
+        yield return new WaitForSeconds(blinkTime);
+        player.GetComponent<MeshRenderer>().enabled = false;
+        yield return new WaitForSeconds(blinkTime);
+        player.GetComponent<MeshRenderer>().enabled = true;
+        yield return new WaitForSeconds(blinkTime);
+        player.GetComponent<MeshRenderer>().enabled = false;
+        yield return new WaitForSeconds(blinkTime);
+        player.GetComponent<MeshRenderer>().enabled = true;
+
+        player.GetComponent<Rigidbody>().isKinematic = false;
+        player.GetComponent<PlayerMovement>().enabled = true;
+    }
+
+    public void CheckPlatform(PlatformColor platColor, PlatformColor playerColor)
+    {
+        if (platColor != PlatformColor.White && platColor != playerColor)
+        {
+            Debug.Log("Wrong Color");
+            StartCoroutine(RespawnPlayer());
+        }
     }
 }

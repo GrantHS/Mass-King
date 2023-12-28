@@ -17,7 +17,11 @@ public class PlayerMovement : MonoBehaviour
     private float _moveSpeed = 30f;
     private float _jumpPower = 300f;
 
-    private bool _isGrounded = false;
+    private PlatformColor _platColor = PlatformColor.White;
+
+    public bool _isGrounded = false;
+
+    public PlatformColor playerColor;
 
 
     private void Awake()
@@ -41,10 +45,16 @@ public class PlayerMovement : MonoBehaviour
     {
         _moveVector = playerControls.Player.Move.ReadValue<Vector3>() * _moveSpeed;
 
-        playerControls.Player.White.performed += ctx => ChangeColor(Color.white);
-        playerControls.Player.Red.performed += ctx => ChangeColor(Color.red);
-        playerControls.Player.Green.performed += ctx => ChangeColor(Color.green);
-        playerControls.Player.Blue.performed += ctx => ChangeColor(Color.blue);
+        playerControls.Player.White.performed += ctx => ChangeColor(Color.white, PlatformColor.White);
+        playerControls.Player.Red.performed += ctx => ChangeColor(Color.red, PlatformColor.Red);
+        playerControls.Player.Green.performed += ctx => ChangeColor(Color.green, PlatformColor.Green);
+        playerControls.Player.Blue.performed += ctx => ChangeColor(Color.blue, PlatformColor.Blue);
+
+        if (GameManager.Instance.isDrained)
+        {
+            GameManager.Instance.isDrained = false;
+            GameManager.Instance.CheckPlatform(_platColor, playerColor);
+        }
     }
 
     private void FixedUpdate()
@@ -60,6 +70,38 @@ public class PlayerMovement : MonoBehaviour
         if(collision.gameObject.layer == 6)
         {
             _isGrounded = true;
+        }
+
+        if (collision.gameObject.GetComponent<Platform>())
+        {
+            Debug.Log("Hit Platform");
+            _platColor = collision.gameObject.GetComponent<Platform>().color;
+            GameManager.Instance.CheckPlatform(_platColor, playerColor);
+            
+
+
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.layer == 6)
+        {
+            _isGrounded = true;
+        }
+
+        if (collision.gameObject.GetComponent<Platform>())
+        {
+            Debug.Log("Hit Platform");
+            GameManager.Instance.CheckPlatform(collision.gameObject.GetComponent<Platform>().color, playerColor);
+            /*
+            if (collision.gameObject.GetComponent<Platform>().color != PlatformColor.White && collision.gameObject.GetComponent<Platform>().color != playerColor)
+            {
+                Debug.Log("Wrong Color");
+                StartCoroutine(GameManager.Instance.RespawnPlayer());
+                playerColor = PlatformColor.White;
+            }
+            */
         }
     }
 
@@ -78,14 +120,15 @@ public class PlayerMovement : MonoBehaviour
         if (_isGrounded) _rb.AddForce(Vector3.up * _jumpPower);
     }
 
-    public void ChangeColor(Color color)
+    public void ChangeColor(Color color, PlatformColor id)
     {
         
         if(GameManager.Instance.Energy > 0)
         {
             GetComponent<MeshRenderer>().material.color = color;
+            playerColor = id;
         }
-        
+
 
     }
 }
