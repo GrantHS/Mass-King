@@ -11,10 +11,16 @@ public class GameManager : Singleton<GameManager>
     private Vector3 respawnPos;
 
     private float respawnTime = 2;
+
     private float maxEnergy = 50;
     private float minEnergy = 0;
-    private float energy = 100;
+    private float energy = 50;
     private float energyDrain = 5f;
+
+    private float maxHumility = 50;
+    private float minHumility = 0;
+    private float humility = 0;
+    private float humilityGain = 40f;
 
     public GameObject player;
 
@@ -22,35 +28,32 @@ public class GameManager : Singleton<GameManager>
 
     public bool isDrained;
 
+    //Collectable Parameters
+    private float egoBoost = 20;
 
     //UI Parameters
-    public GameObject slider;
+    public GameObject energySlider;
+    public GameObject humilitySlider;
 
+    //Properties
     public float Energy { get => energy; private set => energy = value; }
+    public float Humility { get => humility; private set => humility = value; }
 
     private void Update()
     {
         playerColor = player.GetComponent<MeshRenderer>().material.color;
         if (playerColor != normalColor)
         {
-            Energy -= energyDrain * Time.deltaTime;
-            if (Energy < minEnergy)
-            {
-                Energy = minEnergy;
-                playerColor = normalColor;
-                player.GetComponent<MeshRenderer>().material.color = normalColor;
-                player.GetComponent<PlayerMovement>().playerColor = PlatformColor.White;
-                isDrained = true;
-            }
+            DrainEnergy();
         }
         else
         {
-            Energy += energyDrain * Time.deltaTime;
-            if (Energy > maxEnergy) Energy = maxEnergy;
+            AddEnergy();
         }
 
         //Debug.Log("Energy Level: " + energy);
-        slider.GetComponent<Slider>().value = energy;
+        energySlider.GetComponent<Slider>().value = Energy;
+        humilitySlider.GetComponent<Slider>().value = Humility;
     }
 
     private void Start()
@@ -58,7 +61,12 @@ public class GameManager : Singleton<GameManager>
         respawnPos = player.transform.position;
     }
 
-    private IEnumerator RespawnPlayer()
+    public void RespawnPlayer()
+    {
+        StartCoroutine(Blink());
+    }
+
+    private IEnumerator Blink()
     {
         Debug.Log("Respawning Player");
         float blinkTime = (respawnTime / 3);
@@ -66,6 +74,9 @@ public class GameManager : Singleton<GameManager>
         player.GetComponent<PlayerMovement>().enabled = false;
         player.GetComponent<Rigidbody>().isKinematic = true;
         player.GetComponent<MeshRenderer>().material.color = normalColor;
+
+        Energy = maxEnergy;
+        Humility = minHumility;
 
         player.GetComponent<MeshRenderer>().enabled = false;
         player.transform.position = respawnPos;
@@ -88,8 +99,57 @@ public class GameManager : Singleton<GameManager>
     {
         if (platColor != PlatformColor.White && platColor != playerColor)
         {
-            Debug.Log("Wrong Color");
-            StartCoroutine(RespawnPlayer());
+
+            if(platColor == PlatformColor.Checkpoint)
+            {
+                Debug.Log("Checkpoint Reached!");
+                respawnPos = player.transform.position;
+            }
+            else
+            {
+                Debug.Log("Wrong Color");
+                AddHumility();
+            }
+            
         }
+    }
+
+    private void AddEnergy()
+    {
+        Energy += energyDrain * Time.deltaTime;
+        if (Energy > maxEnergy) Energy = maxEnergy;
+    }
+
+    private void DrainEnergy()
+    {
+        Energy -= energyDrain * Time.deltaTime;
+        if (Energy < minEnergy)
+        {
+            Energy = minEnergy;
+            playerColor = normalColor;
+            player.GetComponent<MeshRenderer>().material.color = normalColor;
+            player.GetComponent<PlayerMovement>().playerColor = PlatformColor.White;
+            isDrained = true;
+        }
+    }
+
+    private void AddHumility()
+    {
+        Humility += humilityGain * Time.deltaTime;
+        if( Humility >= maxHumility)
+        {
+            RespawnPlayer();
+        }
+    }
+
+    private void DrainHumility()
+    {
+        Humility -= egoBoost;
+        if(Humility <= minHumility) Humility = minHumility;
+    }
+
+    public void EgoBoost()
+    {
+        DrainHumility();
     }
 }

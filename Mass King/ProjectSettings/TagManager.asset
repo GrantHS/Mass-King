@@ -8,6 +8,8 @@ TagManager:
   - Blue
   - Green
   - White
+  - Checkpoint
+  - Ego
   layers:
   - Default
   - TransparentFX

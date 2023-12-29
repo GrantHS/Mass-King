@@ -9,19 +9,20 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputActions playerControls;
 
     private Rigidbody _rb;
-    //private CharacterController _controller;
-    private Vector3 move;
 
     private Vector3 _moveVector = Vector3.zero;
 
     private float _moveSpeed = 30f;
     private float _jumpPower = 300f;
+    private float minYPos = -20f;
 
     private PlatformColor _platColor = PlatformColor.White;
 
+    public PlatformColor playerColor;
+
     public bool _isGrounded = false;
 
-    public PlatformColor playerColor;
+    
 
 
     private void Awake()
@@ -55,6 +56,11 @@ public class PlayerMovement : MonoBehaviour
             GameManager.Instance.isDrained = false;
             GameManager.Instance.CheckPlatform(_platColor, playerColor);
         }
+
+        if(transform.position.y <= minYPos)
+        {
+            GameManager.Instance.RespawnPlayer();
+        }
     }
 
     private void FixedUpdate()
@@ -62,6 +68,16 @@ public class PlayerMovement : MonoBehaviour
         _rb.AddForce(_moveVector);
 
         playerControls.Player.Jump.performed += Jump;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Ego"))
+        {
+            other.gameObject.SetActive(false);
+            GameManager.Instance.EgoBoost();
+           
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -77,9 +93,6 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Hit Platform");
             _platColor = collision.gameObject.GetComponent<Platform>().color;
             GameManager.Instance.CheckPlatform(_platColor, playerColor);
-            
-
-
         }
     }
 
@@ -92,7 +105,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (collision.gameObject.GetComponent<Platform>())
         {
-            Debug.Log("Hit Platform");
+            //Debug.Log("Hit Platform");
+            if(collision.gameObject.GetComponent<Platform>().color != PlatformColor.Checkpoint)
             GameManager.Instance.CheckPlatform(collision.gameObject.GetComponent<Platform>().color, playerColor);
             /*
             if (collision.gameObject.GetComponent<Platform>().color != PlatformColor.White && collision.gameObject.GetComponent<Platform>().color != playerColor)

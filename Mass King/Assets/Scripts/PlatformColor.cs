@@ -3,6 +3,7 @@ public enum PlatformColor
     White,
     Red,
     Blue,
-    Green
+    Green,
+    Checkpoint
 
 }

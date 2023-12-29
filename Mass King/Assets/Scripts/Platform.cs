@@ -10,6 +10,7 @@ public class Platform : MonoBehaviour
     {
         CheckColor();
         gameObject.tag = color.ToString();
+        Debug.Log(color.ToString());
     }
 
     private void CheckColor()
@@ -29,6 +30,9 @@ public class Platform : MonoBehaviour
                 break;
             case PlatformColor.Green:
                 platColor = Color.green;
+                break;
+            case PlatformColor.Checkpoint:
+                platColor = Color.yellow;
                 break;
             default:
                 Debug.Log("Error with platform color");
