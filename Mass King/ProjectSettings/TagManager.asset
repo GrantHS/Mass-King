@@ -10,6 +10,8 @@ TagManager:
   - White
   - Checkpoint
   - Ego
+  - Tower
+  - NPC
   layers:
   - Default
   - TransparentFX
