@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba78a9c9463a574a874ef34b3b8241f, type: 3}
+  m_Name: Mr.RedGreetings
+  m_EditorClassIdentifier: 
+  text:
+  - Hey Maz, take it easy man!
+  - 'You''ve been out for quite a while, I don''t think you should be walking. '
+  - Can you even remember anything?  [Tutorial]
+  - Alright, if you say so, i'll meet you at the party, don't be late!
+  - That's what I thought.
+  - 'By the time I showed up, you were already out of it. '
+  - It was like your body was here but your soul was somewhere else...
+  - '...anyways, there''s a party going on and everyone else is going to be there. '
+  - You seem to be walking just fine so I'll just meet you there.
+  - 'Oh, one last thing, make sure you look presentable, the bouncer won''t just
+    let anyone in. '
+  - Rumor has it, he threw some guy off the balcony because he wasn't wearing the
+    right clothes...
+  - ...Alright, I got some other friends waiting for me, i'll see you at the party!
+  characterName: Mr.Red
+  characterColor: {r: 1, g: 0, b: 0, a: 1}
