@@ -7,8 +7,13 @@ using UnityEngine;
 public class DialogueData : ScriptableObject
 {
     public List<string> text;
+    public string altText;
+    [Tooltip("Which of the above elements require a player response")]
+    public List<int> reactables;
+    public string posReactionText, negReactionText;
     public string characterName;
     public Color characterColor;
+    
 
 
 }
