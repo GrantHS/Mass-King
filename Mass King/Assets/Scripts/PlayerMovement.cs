@@ -20,7 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     public PlatformColor playerColor;
 
-    public bool _isGrounded = false;
+
+    private bool _isGrounded = false;
 
     
 
@@ -90,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (collision.gameObject.GetComponent<Platform>())
         {
-            Debug.Log("Hit Platform");
+            //Debug.Log("Hit Platform");
             _platColor = collision.gameObject.GetComponent<Platform>().color;
             GameManager.Instance.CheckPlatform(_platColor, playerColor);
         }

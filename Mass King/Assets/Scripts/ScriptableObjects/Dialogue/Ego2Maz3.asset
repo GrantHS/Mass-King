@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba78a9c9463a574a874ef34b3b8241f, type: 3}
+  m_Name: Ego2Maz3
+  m_EditorClassIdentifier: 
+  text:
+  - Hey, look at you!
+  - Already changing colors.
+  - And communicating with your masters...
+  - But be careful.
+  - You can't stay any color for too long or your ENERGY will be depleted.
+  - I'm sure you wouldn't want to show your...
+  - ...quirk...in the middle of all these bystanders.
+  - We need to show them you mean business.
+  - To do that we're going to jump and do some parcore over these platforms.
+  - See if you can get your masters to let you jump.
+  altText: 
+  reactables: 
+  posReactionText: 
+  negReactionText: 
+  characterName: Ego
+  characterColor: {r: 0.9607844, g: 0.5647059, b: 0.19607845, a: 1}
+  idNumber: 7
+  tutorial: 1

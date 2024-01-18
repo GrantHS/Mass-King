@@ -6,11 +6,14 @@ public class Platform : MonoBehaviour
 {
     public PlatformColor color;
 
+    public DialogueData dialogueData;
+
+    private bool doneTalking = false;
     private void Awake()
     {
         CheckColor();
         gameObject.tag = color.ToString();
-        Debug.Log(color.ToString());
+        //Debug.Log(color.ToString());
     }
 
     private void CheckColor()
@@ -40,5 +43,33 @@ public class Platform : MonoBehaviour
                 break;
         }
         GetComponent<MeshRenderer>().material.color = platColor;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player") && dialogueData != null)
+        {
+            if(dialogueData.tutorial == true)
+            {
+                if (DialogueManager.Instance.Tutorial)
+                {
+                    if (!doneTalking)
+                    {
+                        DialogueManager.Instance.BeginDialogue(dialogueData);
+                        doneTalking = true;
+                    }
+                }
+            }
+            else
+            {
+                if (!doneTalking)
+                {
+                    DialogueManager.Instance.BeginDialogue(dialogueData);
+                    doneTalking = true;
+                }
+            }
+
+            
+        }
     }
 }

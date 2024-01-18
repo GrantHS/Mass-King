@@ -13,6 +13,8 @@ public class DialogueData : ScriptableObject
     public string posReactionText, negReactionText;
     public string characterName;
     public Color characterColor;
+    public int idNumber;
+    public bool tutorial;
     
 
 

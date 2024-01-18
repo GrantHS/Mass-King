@@ -32,3 +32,4 @@ MonoBehaviour:
   negReactionText: I...remember...EVERYTHING! [Skip Tutorial]
   characterName: Mr.Red
   characterColor: {r: 1, g: 0, b: 0, a: 1}
+  idNumber: 1

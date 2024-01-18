@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba78a9c9463a574a874ef34b3b8241f, type: 3}
+  m_Name: Mr.Red2Maz
+  m_EditorClassIdentifier: 
+  text:
+  - Oh, hey Maz!
+  - I was just thinking how I was going to get across this...thing.
+  - Why doesn't the party host just have a straight path to their tower?
+  - Why doesn't the party host just have a straight path to their tower?
+  - My friends tried getting across but couldn't make it.
+  - After respawning a thousand times, they just gave up and went home.
+  - Talk about a rage quit.
+  - I think I figured it out, I'm going to give it another try.
+  - I'll see you on the other side Maz.
+  altText: 
+  reactables: 
+  posReactionText: 
+  negReactionText: 
+  characterName: Mr. Red
+  characterColor: {r: 1, g: 0, b: 0, a: 1}
+  idNumber: 10
+  tutorial: 0

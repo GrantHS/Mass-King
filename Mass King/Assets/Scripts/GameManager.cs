@@ -102,12 +102,12 @@ public class GameManager : Singleton<GameManager>
 
             if(platColor == PlatformColor.Checkpoint)
             {
-                Debug.Log("Checkpoint Reached!");
+                //Debug.Log("Checkpoint Reached!");
                 respawnPos = player.transform.position;
             }
             else
             {
-                Debug.Log("Wrong Color");
+                //Debug.Log("Wrong Color");
                 AddHumility();
             }
             

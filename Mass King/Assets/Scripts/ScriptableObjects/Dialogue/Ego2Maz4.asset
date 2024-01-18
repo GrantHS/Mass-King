@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ba78a9c9463a574a874ef34b3b8241f, type: 3}
+  m_Name: Ego2Maz4
+  m_EditorClassIdentifier: 
+  text:
+  - Yay you made it to the first checkpoint platform!
+  - These are the neutral platforms in this world.
+  - These platforms have a mind of their own.
+  - And remember everything.
+  - EVERYTHING...
+  - I got it to track your location on the platform so you can come here when you
+    die.
+  - ...
+  - I mean...what?
+  - Hey, look! It's Mr.Red over there on top of the cliff!
+  - You should go catch up with him.
+  altText: 
+  reactables: 
+  posReactionText: 
+  negReactionText: 
+  characterName: Ego
+  characterColor: {r: 0.9490197, g: 0.5529412, b: 0.1764706, a: 1}
+  idNumber: 9
+  tutorial: 1
